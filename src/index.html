@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>Apple Music Login</title>
-    <script src="https://js-cdn.music.apple.com/musickit/v1/musickit.js"></script>
+    <script src="https://js-cdn.music.apple.com/musickit/v3/musickit.js"></script>
     <script>
       (() => {
         const token = '$TOKEN';
@@ -17,7 +17,7 @@
 
         let shouldClose = false;
 
-        if (appIconUrl) {       
+        if (appIconUrl) {
           const iconLink = document.createElement('link');
           iconLink.setAttribute('rel', 'apple-music-app-icon');
           iconLink.setAttribute('href', appIconUrl);
@@ -25,14 +25,14 @@
         }
 
         const onMusicKitLoaded = () => Promise.resolve().then(async () => {
-          document.removeEventListener('musickitloaded', onMusicKitLoaded); 
+          document.removeEventListener('musickitloaded', onMusicKitLoaded);
           MusicKit.configure({
             developerToken: token,
             app: {
               name: appName,
             }
           });
-          
+
           if (showDialog) {
             // Forget user's music token so their are prompted to login when `authorize` is called
             const isMusicUserToken = (s) => s.startsWith('music.') && s.endsWith('.u');
@@ -41,7 +41,7 @@
               if (isMusicUserToken(key)) localStorage.removeItem(key);
             }
           }
-          
+
           const musicKit = MusicKit.getInstance();
           const userToken = await musicKit.authorize();
 
